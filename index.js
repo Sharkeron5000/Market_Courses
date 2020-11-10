@@ -9,7 +9,6 @@ const cardRoutes = require('./routes/card');
 const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const User = require('./models/user');
-const user = require('./models/user');
 
 const app = express();
 
@@ -25,7 +24,7 @@ app.set('views', 'views');
 
 app.use(async (req, res, next) => {
   try {
-    const user = await User.findById('5faae8db80f3e40504aa8106');
+    const user = await User.findById('5fab13d0818a5104ec1e64fc');
     req.user = user;
     next();
   } catch (e) {
