@@ -1,10 +1,14 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const Course = require('../models/course');
 const router = Router();
 
 router.get('/', async (req, res) => {
   res.status(200);
-  const courses = await Course.find();
+  const courses = await Course.find()
+    .populate('userId', 'email name')
+    .select('price title img');
+
+
   res.render('courses', {
     title: 'Курсы',
     isCourses: true,
@@ -13,7 +17,7 @@ router.get('/', async (req, res) => {
 });
 
 router.get('/:id/edit', async (req, res) => {
-  if(!req.query.allow) {
+  if (!req.query.allow) {
     return res.redirect('/');
   }
 
@@ -25,8 +29,8 @@ router.get('/:id/edit', async (req, res) => {
   });
 });
 
-router.post('/edit', async(req,res) => {
-  const {id} = req.body;
+router.post('/edit', async (req, res) => {
+  const { id } = req.body;
   delete req.body.id;
 
   await Course.findByIdAndUpdate(id, req.body);
@@ -35,7 +39,7 @@ router.post('/edit', async(req,res) => {
 
 router.post('/remove', async (req, res) => {
   try {
-    await Course.deleteOne({_id: req.body.id});
+    await Course.deleteOne({ _id: req.body.id });
     res.redirect('/courses')
   } catch (e) {
     console.log(e);
