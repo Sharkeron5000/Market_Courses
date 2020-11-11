@@ -70,6 +70,11 @@ userSchema.method('toClient', function() {
   delete course._id;
 
   return course;
-})
+});
+
+userSchema.methods.clearCart = function () {
+  this.cart = {items: []};
+  return this.save();
+}
 
 module.exports = model('User', userSchema);
