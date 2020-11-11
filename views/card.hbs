@@ -26,6 +26,10 @@
   <p><strong>Цена:</strong>
     <spa class="price">{{price}}</spa>
   </p>
+
+  <form action="/orders" method="post">
+    <button type="submit" class="btn">Сделать заказ</button>
+  </form>
   {{else}}
   <p>Корзина пуста</p>
   {{/if}}
