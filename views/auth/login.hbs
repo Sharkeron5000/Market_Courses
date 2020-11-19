@@ -24,6 +24,7 @@
         <button class="btn btn-primary" type="submit">Войти</button>
       </form>
     </div>
+
     <div id="register" class="col s6 offset-s3">
       <h1>Создать аккаунт</h1>
       <form action="/auth/register" method="POST">
@@ -34,12 +35,19 @@
         </div>
 
         <div class="input-field">
-          <input id="rpassword" name="confirm" type="password" class="validate" required>
+          <input id="name" name="name" type="text" class="validate" required>
+          <label for="name">Ваше имя</label>
+          <span class="helper-text" data-error="Введите имя"></span>
+        </div>
+
+        <div class="input-field">
+          <input id="rpassword" name="password" type="password" class="validate" required>
           <label for="rpassword">Пароль</label>
           <span class="helper-text" data-error="Введите пароль"></span>
         </div>
+
         <div class="input-field">
-          <input id="confirm" name="password" type="password" class="validate" required>
+          <input id="confirm" name="confirm" type="password" class="validate" required>
           <label for="confirm">Пароль еще раз</label>
           <span class="helper-text" data-error="Введите пароль"></span>
         </div>
