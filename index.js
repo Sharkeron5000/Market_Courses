@@ -15,9 +15,9 @@ const addRoutes = require('./routes/add');
 const orderRoutes = require('./routes/order');
 const authRoutes = require('./routes/auth');
 const varMiddleware = require('./middleaware/variables');
-const userMiddleware = require('./middleaware/user');
-const keys = require('./keys')
+const userMiddleware = require('./middleaware/user')
 
+const MONGODB_IRI = 'mongodb+srv://AqVadPlay:sWpyPeH2vvqfAEOd@cluster0.yb8wm.mongodb.net/shop';
 const app = express();
 
 const hbs = exphbs.create({
@@ -27,7 +27,7 @@ const hbs = exphbs.create({
 });
 const store = new MongoStore({
   collection: 'sessions',
-  uri: keys.MONGODB_IRI
+  uri: MONGODB_IRI
 })
 
 app.engine('hbs', hbs.engine);
@@ -47,7 +47,7 @@ app.set('views', 'views');
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-  secret: keys.SESSION_SECRET,
+  secret: 'some secret value',
   resave: false,
   saveUninitialized: false,
   store,
@@ -69,7 +69,7 @@ const PORT = process.env.PORT || 3000;
 
 async function start() {
   try {
-    await mongoose.connect(keys.MONGODB_IRI, {
+    await mongoose.connect(MONGODB_IRI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
