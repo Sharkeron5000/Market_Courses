@@ -71,8 +71,8 @@ router.post('/register', async (req, res) => {
       });
 
       await user.save();
-      await transoprter.sendMail(regEmail(email));
       res.redirect('/auth/login#login');
+      await transoprter.sendMail(regEmail(email));
     }
   } catch (e) {
     console.log(e);
