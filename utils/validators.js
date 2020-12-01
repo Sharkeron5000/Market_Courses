@@ -15,10 +15,12 @@ exports.registerValidators = [
       }
     })
     .normalizeEmail(),
-  body('password', 'Пароль должен быть минимум 6 символов')
-    .isLength({ min: 6, max: 56 })
-    .isAlphanumeric()
+
+  body('password')
+    .isLength({ min: 6, max: 56 }).withMessage('Пароль должен быть минимум 6 символов')
+    .isAlphanumeric().withMessage('Нужен корректный пароль')
     .trim(),
+
   body('confirm').custom((value, { req }) => {
     if (value !== req.body.password) {
       throw new Error('Пароли должны совпадать')
@@ -26,6 +28,16 @@ exports.registerValidators = [
     return true
   })
     .trim(),
+
   body('name').isLength({ min: 3 }).withMessage('Имя должно иметь как минимум 3 символа')
     .trim()
-]
+];
+
+exports.loginValidators = [
+  body('email')
+    .isEmail().withMessage('Введите корректный Email')
+    .normalizeEmail(),
+
+  body('password')
+    .trim()
+];

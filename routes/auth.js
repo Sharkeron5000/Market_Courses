@@ -8,7 +8,7 @@ const User = require('../models/user');
 const keys = require('../keys');
 const regEmail = require('../emails/registrations');
 const resetEmail = require('../emails/reset');
-const {registerValidators} = require('../utils/validators');
+const {registerValidators, loginValidators} = require('../utils/validators');
 const router = Router();
 
 const transoprter = nodemailer.createTransport(sendgrid({
@@ -30,10 +30,16 @@ router.get('/logout', async (req, res) => {
   })
 });
 
-router.post('/login', async (req, res) => {
+router.post('/login', loginValidators, async (req, res) => {
   try {
     const { email, password } = req.body;
     const candidate = await User.findOne({ email });
+    
+    const error = validationResult(req);
+    if(!error.isEmpty()){
+      req.flash('loginError', error.array()[0].msg);
+      return res.status(422).redirect('/auth/login#login');
+    }
 
     if (candidate) {
       const areSame = await bcrypt.compare(password, candidate.password);
