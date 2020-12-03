@@ -14,9 +14,11 @@ const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const orderRoutes = require('./routes/order');
 const authRoutes = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 const varMiddleware = require('./middleaware/variables');
 const userMiddleware = require('./middleaware/user');
 const errorHandler = require('./middleaware/error');
+const fileMiddleware = require('./middleaware/file');
 const keys = require('./keys')
 
 const app = express();
@@ -47,6 +49,7 @@ app.set('views', 'views');
 // })
 
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
   secret: keys.SESSION_SECRET,
@@ -54,6 +57,7 @@ app.use(session({
   saveUninitialized: false,
   store,
 }));
+app.use(fileMiddleware.single('avatar'));
 app.use(csrf());
 app.use(flash());
 app.use(varMiddleware);
@@ -65,6 +69,7 @@ app.use('/add', addRoutes);
 app.use('/card', cardRoutes);
 app.use('/orders', orderRoutes);
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 app.use(errorHandler);
 
