@@ -1,22 +1,42 @@
+/** Сервер */
 const express = require('express');
+/** Сокращение пути и более легкого получения доступа к файлам */
 const path = require('path');
+/** Защита сервера присваиванием токена */
 const csrf = require('csurf');
+/** Серверные сообщения, которые отображаются только один раз */
 const flash = require('connect-flash');
+/** База данных */
 const mongoose = require('mongoose');
+/** Защита Express приложения, устанавливая различные HTTP заголовки */
 const helmet = require('helmet');
+/** Сжиматель кода*/
 const compression = require('compression');
+/** Поддержка handlebars в экспрессе*/
 const exphbs = require('express-handlebars');
+/** handlebars */
 const Handlebars = require('handlebars');
 const { allowInsecurePrototypeAccess } = require('@handlebars/allow-prototype-access');
+/** Сессии */
 const session = require('express-session');
+/** База данных */
 const MongoStore = require('connect-mongodb-session')(session);
+/** РОУТЕРЫ  */
+/** Домашная страница */
 const homeRoutes = require('./routes/home');
+/** */
 const cardRoutes = require('./routes/card');
+/** Список курсов */
 const coursesRoutes = require('./routes/courses');
+/** Добавление курса */
 const addRoutes = require('./routes/add');
+/** Корзина */
 const orderRoutes = require('./routes/order');
+/** Авторизация */
 const authRoutes = require('./routes/auth');
+/** Личнаяяя страница */
 const profileRoutes = require('./routes/profile');
+/** САМОПИСАНЫЕ middleaware */
 const varMiddleware = require('./middleaware/variables');
 const userMiddleware = require('./middleaware/user');
 const errorHandler = require('./middleaware/error');
